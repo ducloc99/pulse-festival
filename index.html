@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Festival</title>
+<meta name="description" content="Three nights, one desert, no headliners announced until you're there. June 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0d0716;
+    --violet:#1c0f33;
+    --magenta:#ff2ea6;
+    --cyan:#37f2d4;
+    --bone:#f3eefc;
+    --dim:#a898c4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--void);
+    color:var(--bone);
+    font-family:'Space Grotesk',sans-serif;
+    overflow-x:hidden;
+  }
+  .display{font-family:'Anton',sans-serif;text-transform:uppercase;line-height:0.86;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1280px;margin:0 auto;padding-inline:32px;position:relative;z-index:2;}
+
+  #bg{position:fixed;inset:0;z-index:0;}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  header{position:relative;z-index:5;display:flex;justify-content:space-between;align-items:center;padding-block:28px;}
+  .mark{font-family:'Anton',sans-serif;font-size:1.4rem;letter-spacing:0.02em;}
+  .mark span{color:var(--magenta);}
+  nav{display:flex;gap:32px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);}
+  nav a:hover{color:var(--cyan);}
+
+  .hero{padding-block:60px 40px;position:relative;}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);
+    border:1px solid rgba(55,242,212,0.35);padding:8px 16px;border-radius:999px;margin-bottom:28px;
+  }
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:blink 1.4s infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+  h1.display{font-size:clamp(3.6rem,11vw,9.5rem);margin:0;}
+  .h1-row{display:flex;flex-wrap:wrap;gap:0 0.18em;}
+  .h1-row .accent{color:var(--magenta);-webkit-text-stroke:2px var(--magenta);}
+  .h1-row .outline{color:transparent;-webkit-text-stroke:2px var(--bone);}
+  .hero-sub{display:flex;justify-content:space-between;align-items:flex-end;margin-top:40px;gap:24px;flex-wrap:wrap;}
+  .hero-sub p{max-width:38ch;color:var(--dim);font-size:1.15rem;margin:0;}
+  .date-badge{font-family:'Anton',sans-serif;text-align:right;}
+  .date-badge .big{font-size:2.6rem;color:var(--cyan);display:block;}
+  .date-badge .small{font-size:0.85rem;letter-spacing:0.1em;color:var(--dim);text-transform:uppercase;}
+
+  .cta-row{display:flex;gap:18px;margin-top:36px;flex-wrap:wrap;}
+  .btn{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:0.02em;
+    padding:17px 34px;border-radius:999px;display:inline-block;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
+  }
+  .btn-solid{background:var(--magenta);color:var(--void);box-shadow:0 0 0 rgba(255,46,166,0);}
+  .btn-solid:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,46,166,0.35);}
+  .btn-line{border:1px solid rgba(243,238,252,0.3);}
+  .btn-line:hover{border-color:var(--cyan);color:var(--cyan);}
+
+  .marquee{
+    position:relative;z-index:5;
+    border-top:1px solid rgba(243,238,252,0.12);border-bottom:1px solid rgba(243,238,252,0.12);
+    overflow:hidden;white-space:nowrap;padding-block:20px;margin-top:56px;
+  }
+  .marquee-track{display:inline-flex;gap:48px;animation:marquee 26s linear infinite;}
+  .marquee-track span{font-family:'Anton',sans-serif;font-size:1.8rem;letter-spacing:0.02em;display:inline-flex;align-items:center;gap:22px;}
+  .marquee-track span::after{content:'✦';color:var(--magenta);font-size:1rem;}
+  @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion: reduce){.marquee-track{animation:none;} .dot{animation:none;}}
+
+  section{position:relative;z-index:5;padding-block:96px;}
+  .section-label{font-size:0.8rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;display:block;}
+  h2.display{font-size:clamp(2.4rem,5vw,4rem);margin:0 0 48px;}
+
+  .stage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .stage-card{
+    background:linear-gradient(160deg, rgba(255,46,166,0.08), rgba(55,242,212,0.04));
+    border:1px solid rgba(243,238,252,0.1);
+    border-radius:20px;padding:32px;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s;
+  }
+  .stage-card:hover{transform:translateY(-8px);border-color:var(--magenta);}
+  .stage-card .n{font-family:'Anton',sans-serif;font-size:0.85rem;color:var(--magenta);letter-spacing:0.1em;}
+  .stage-card h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:1.7rem;margin:10px 0 12px;}
+  .stage-card p{color:var(--dim);margin:0;line-height:1.6;}
+
+  .gallery-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .gallery-strip img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:16px;filter:saturate(1.15) contrast(1.05);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1);}
+  .gallery-strip a:hover img{transform:scale(1.04);}
+  .gallery-strip a:nth-child(even) img{margin-top:36px;}
+
+  .lineup{max-width:780px;}
+  .lineup-row{display:flex;justify-content:space-between;align-items:center;padding-block:22px;border-top:1px solid rgba(243,238,252,0.12);}
+  .lineup-row:first-child{border-top:none;}
+  .lineup-row .day{font-family:'Anton',sans-serif;font-size:0.85rem;color:var(--cyan);letter-spacing:0.08em;width:120px;}
+  .lineup-row .name{font-family:'Anton',sans-serif;font-size:1.6rem;flex:1;text-transform:uppercase;}
+  .lineup-row .set{color:var(--dim);font-size:0.9rem;}
+
+  footer{position:relative;z-index:5;padding-block:48px;border-top:1px solid rgba(243,238,252,0.12);}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:0.82rem;color:var(--dim);letter-spacing:0.04em;}
+
+  @media (max-width:880px){
+    .wrap{padding-inline:20px;}
+    .stage-grid{grid-template-columns:1fr;}
+    .gallery-strip{grid-template-columns:repeat(2,1fr);}
+    .hero-sub{flex-direction:column;align-items:flex-start;}
+    .date-badge{text-align:left;}
+  }
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="grain"></div>
+
+<div class="wrap">
+  <header>
+    <div class="mark">PULSE<span>.</span></div>
+    <nav>
+      <a href="#stages">Stages</a>
+      <a href="#lineup">Lineup</a>
+      <a href="#visuals">Visuals</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <span class="hero-eyebrow"><span class="dot"></span> Tickets live now</span>
+    <h1 class="display">
+      <div class="h1-row">Three</div>
+      <div class="h1-row"><span class="outline">Nights.</span></div>
+      <div class="h1-row">One <span class="accent">Desert.</span></div>
+    </h1>
+    <div class="hero-sub">
+      <p>No headliners announced until the gates open. 40 artists, 4 stages, one location revealed 48 hours before doors.</p>
+      <div class="date-badge">
+        <span class="big">JUN 11–13</span>
+        <span class="small">2027 · Location TBA</span>
+      </div>
+    </div>
+    <div class="cta-row">
+      <a href="#" class="btn btn-solid">Get Tickets</a>
+      <a href="#lineup" class="btn btn-line">See the Lineup</a>
+    </div>
+  </div>
+
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>SECRET SET</span><span>4 STAGES</span><span>72 HOURS</span><span>NO PHONES ON DANCEFLOOR</span><span>SECRET SET</span><span>4 STAGES</span><span>72 HOURS</span><span>NO PHONES ON DANCEFLOOR</span>
+    </div>
+  </div>
+
+  <section id="stages">
+    <span class="section-label">The Stages</span>
+    <h2 class="display">Pick your frequency.</h2>
+    <div class="stage-grid">
+      <div class="stage-card">
+        <span class="n">STAGE 01</span>
+        <h3>The Basin</h3>
+        <p>Sunk into the dry lakebed — bass-heavy, low to the ground, built for closing sets at 4am.</p>
+      </div>
+      <div class="stage-card">
+        <span class="n">STAGE 02</span>
+        <h3>The Ridge</h3>
+        <p>Elevated stage facing the sunrise — the one slot everyone fights to be scheduled for.</p>
+      </div>
+      <div class="stage-card">
+        <span class="n">STAGE 03</span>
+        <h3>The Static</h3>
+        <p>No stage lighting at all — just the crowd, a single sound system, and whoever shows up to play.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="lineup">
+    <span class="section-label">Confirmed So Far</span>
+    <h2 class="display">Three names.<br>The rest is a secret.</h2>
+    <div class="lineup">
+      <div class="lineup-row"><span class="day">FRI</span><span class="name">Mara Volt</span><span class="set">Closing, The Basin</span></div>
+      <div class="lineup-row"><span class="day">SAT</span><span class="name">Kilo Sundown</span><span class="set">Sunrise, The Ridge</span></div>
+      <div class="lineup-row"><span class="day">SUN</span><span class="name">Static Youth</span><span class="set">All Night, The Static</span></div>
+    </div>
+  </section>
+
+  <section id="visuals">
+    <span class="section-label">Last Year</span>
+    <h2 class="display">What it actually looked like.</h2>
+    <div class="gallery-strip">
+      <a href="#"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=700&auto=format&fit=crop" alt="Crowd dancing under stage lights at Pulse Festival"></a>
+      <a href="#"><img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=700&auto=format&fit=crop" alt="DJ performing at sunset on The Ridge stage"></a>
+      <a href="#"><img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=700&auto=format&fit=crop" alt="Colorful stage lighting and pyrotechnics at night"></a>
+      <a href="#"><img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=700&auto=format&fit=crop" alt="Silhouettes of the crowd against a laser light show"></a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-row">
+      <span>PULSE FESTIVAL — JUNE 11–13, 2027</span>
+      <span>18+ ONLY · CASHLESS SITE · NO RE-ENTRY</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var canvas = document.getElementById('bg');
+  var ctx = canvas.getContext('2d');
+  var blobs = [];
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function makeBlobs(){
+    blobs = [
+      {x:0.2,y:0.25,r:0.42,c:'255,46,166', dx:0.00012, dy:0.00009, t:0},
+      {x:0.8,y:0.65,r:0.38,c:'55,242,212', dx:-0.0001, dy:0.00013, t:2},
+      {x:0.5,y:0.85,r:0.30,c:'150,80,255', dx:0.00008, dy:-0.00011, t:4}
+    ];
+  }
+
+  function draw(time){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = '#0d0716';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    var dim = Math.min(canvas.width, canvas.height);
+    for (var i=0;i<blobs.length;i++){
+      var b = blobs[i];
+      var cx = (b.x + Math.sin(time*0.0002 + b.t)*0.05) * canvas.width;
+      var cy = (b.y + Math.cos(time*0.00016 + b.t)*0.05) * canvas.height;
+      var r = b.r * dim;
+      var grad = ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+      grad.addColorStop(0, 'rgba('+b.c+',0.35)');
+      grad.addColorStop(1, 'rgba('+b.c+',0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.fill();
+    }
+    if (!reduced) requestAnimationFrame(draw);
+  }
+
+  try{
+    resize();
+    makeBlobs();
+    window.addEventListener('resize', resize);
+    requestAnimationFrame(draw);
+    if (reduced) draw(0);
+  }catch(e){}
+})();
+</script>
+
+</body>
+</html>
