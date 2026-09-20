@@ -38,7 +38,7 @@
   header{position:relative;z-index:5;display:flex;justify-content:space-between;align-items:center;padding-block:28px;}
   .mark{font-family:'Anton',sans-serif;font-size:1.4rem;letter-spacing:0.02em;}
   .mark span{color:var(--magenta);}
-  nav{display:flex;gap:32px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);}
+  nav{display:flex;gap:28px;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);}
   nav a:hover{color:var(--cyan);}
 
   .hero{padding-block:60px 40px;position:relative;}
@@ -70,6 +70,11 @@
   .btn-line{border:1px solid rgba(243,238,252,0.3);}
   .btn-line:hover{border-color:var(--cyan);color:var(--cyan);}
 
+  .hero-visual{margin-top:56px;position:relative;border-radius:24px;overflow:hidden;aspect-ratio:16/6.4;}
+  .hero-visual img{width:100%;height:100%;object-fit:cover;filter:saturate(1.2) contrast(1.05);}
+  .hero-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg, rgba(13,7,22,0.85), rgba(13,7,22,0) 45%);}
+  .hero-visual .cap{position:absolute;left:24px;bottom:20px;font-family:'Anton',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:0.04em;}
+
   .marquee{
     position:relative;z-index:5;
     border-top:1px solid rgba(243,238,252,0.12);border-bottom:1px solid rgba(243,238,252,0.12);
@@ -82,33 +87,59 @@
   @media (prefers-reduced-motion: reduce){.marquee-track{animation:none;} .dot{animation:none;}}
 
   section{position:relative;z-index:5;padding-block:96px;}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
   .section-label{font-size:0.8rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;display:block;}
   h2.display{font-size:clamp(2.4rem,5vw,4rem);margin:0 0 48px;}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:48px;}
+  .section-head p{color:var(--dim);max-width:38ch;font-size:1.05rem;margin:0;}
 
   .stage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .stage-card{
     background:linear-gradient(160deg, rgba(255,46,166,0.08), rgba(55,242,212,0.04));
     border:1px solid rgba(243,238,252,0.1);
-    border-radius:20px;padding:32px;
+    border-radius:20px;overflow:hidden;
     transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s;
   }
   .stage-card:hover{transform:translateY(-8px);border-color:var(--magenta);}
+  .stage-card img{width:100%;aspect-ratio:16/10;object-fit:cover;}
+  .stage-card .body{padding:28px;}
   .stage-card .n{font-family:'Anton',sans-serif;font-size:0.85rem;color:var(--magenta);letter-spacing:0.1em;}
-  .stage-card h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:1.7rem;margin:10px 0 12px;}
-  .stage-card p{color:var(--dim);margin:0;line-height:1.6;}
+  .stage-card h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:1.6rem;margin:10px 0 12px;}
+  .stage-card p{color:var(--dim);margin:0;line-height:1.6;font-size:0.95rem;}
 
   .gallery-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
   .gallery-strip img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:16px;filter:saturate(1.15) contrast(1.05);
     transition:transform .4s cubic-bezier(.2,.8,.2,1);}
   .gallery-strip a:hover img{transform:scale(1.04);}
   .gallery-strip a:nth-child(even) img{margin-top:36px;}
+  .gallery-strip-2{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px;}
+  .gallery-strip-2 img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px;filter:saturate(1.15) contrast(1.05);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1);}
+  .gallery-strip-2 a:hover img{transform:scale(1.04);}
 
-  .lineup{max-width:780px;}
-  .lineup-row{display:flex;justify-content:space-between;align-items:center;padding-block:22px;border-top:1px solid rgba(243,238,252,0.12);}
-  .lineup-row:first-child{border-top:none;}
-  .lineup-row .day{font-family:'Anton',sans-serif;font-size:0.85rem;color:var(--cyan);letter-spacing:0.08em;width:120px;}
-  .lineup-row .name{font-family:'Anton',sans-serif;font-size:1.6rem;flex:1;text-transform:uppercase;}
-  .lineup-row .set{color:var(--dim);font-size:0.9rem;}
+  .lineup{max-width:900px;}
+  .lineup-day-label{font-family:'Anton',sans-serif;font-size:1.1rem;color:var(--magenta);letter-spacing:0.08em;margin:36px 0 6px;text-transform:uppercase;}
+  .lineup-day-label:first-child{margin-top:0;}
+  .lineup-row{display:flex;justify-content:space-between;align-items:center;padding-block:20px;border-top:1px solid rgba(243,238,252,0.12);}
+  .lineup-row .name{font-family:'Anton',sans-serif;font-size:1.5rem;flex:1;text-transform:uppercase;}
+  .lineup-row .set{color:var(--dim);font-size:0.88rem;}
+
+  .tiers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .tier-card{border:1px solid rgba(243,238,252,0.14);border-radius:20px;padding:36px 30px;position:relative;}
+  .tier-card.hi{border-color:var(--magenta);background:linear-gradient(160deg, rgba(255,46,166,0.1), transparent);}
+  .tier-card .badge{position:absolute;top:-13px;right:28px;background:var(--magenta);color:var(--void);font-family:'Anton',sans-serif;font-size:0.72rem;padding:5px 14px;border-radius:999px;letter-spacing:0.06em;}
+  .tier-card h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:1.3rem;margin:0 0 6px;}
+  .tier-card .price{font-family:'Anton',sans-serif;font-size:2.4rem;color:var(--cyan);margin:14px 0 20px;}
+  .tier-card .price span{font-size:1rem;color:var(--dim);}
+  .tier-card ul{list-style:none;padding:0;margin:0 0 28px;display:flex;flex-direction:column;gap:12px;color:var(--dim);font-size:0.92rem;}
+  .tier-card li::before{content:'✦ ';color:var(--cyan);}
+
+  .faq-list{max-width:760px;}
+  .faq-item{border-top:1px solid rgba(243,238,252,0.12);padding-block:26px;}
+  .faq-item:last-child{border-bottom:1px solid rgba(243,238,252,0.12);}
+  .faq-item h4{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:1.15rem;margin:0 0 10px;}
+  .faq-item p{color:var(--dim);margin:0;line-height:1.7;}
 
   footer{position:relative;z-index:5;padding-block:48px;border-top:1px solid rgba(243,238,252,0.12);}
   .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:0.82rem;color:var(--dim);letter-spacing:0.04em;}
@@ -116,7 +147,8 @@
   @media (max-width:880px){
     .wrap{padding-inline:20px;}
     .stage-grid{grid-template-columns:1fr;}
-    .gallery-strip{grid-template-columns:repeat(2,1fr);}
+    .gallery-strip,.gallery-strip-2{grid-template-columns:repeat(2,1fr);}
+    .tiers-grid{grid-template-columns:1fr;}
     .hero-sub{flex-direction:column;align-items:flex-start;}
     .date-badge{text-align:left;}
   }
@@ -133,6 +165,8 @@
       <a href="#stages">Stages</a>
       <a href="#lineup">Lineup</a>
       <a href="#visuals">Visuals</a>
+      <a href="#tickets">Tickets</a>
+      <a href="#faq">FAQ</a>
     </nav>
   </header>
 
@@ -151,8 +185,13 @@
       </div>
     </div>
     <div class="cta-row">
-      <a href="#" class="btn btn-solid">Get Tickets</a>
+      <a href="#tickets" class="btn btn-solid">Get Tickets</a>
       <a href="#lineup" class="btn btn-line">See the Lineup</a>
+    </div>
+
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1600&auto=format&fit=crop" alt="Crowd dancing under stage lights at Pulse Festival last year">
+      <span class="cap">Pulse '26 — The Basin, closing set</span>
     </div>
   </div>
 
@@ -163,45 +202,144 @@
   </div>
 
   <section id="stages">
-    <span class="section-label">The Stages</span>
-    <h2 class="display">Pick your frequency.</h2>
+    <div class="section-head reveal">
+      <div>
+        <span class="section-label">The Stages</span>
+        <h2 class="display" style="margin-bottom:0;">Pick your frequency.</h2>
+      </div>
+      <p>Four completely different rooms, four completely different nights, all fifty feet from each other.</p>
+    </div>
     <div class="stage-grid">
-      <div class="stage-card">
-        <span class="n">STAGE 01</span>
-        <h3>The Basin</h3>
-        <p>Sunk into the dry lakebed — bass-heavy, low to the ground, built for closing sets at 4am.</p>
+      <div class="stage-card reveal">
+        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=800&auto=format&fit=crop" alt="Bass-heavy stage lit in magenta at The Basin">
+        <div class="body">
+          <span class="n">STAGE 01</span>
+          <h3>The Basin</h3>
+          <p>Sunk into the dry lakebed — bass-heavy, low to the ground, built for closing sets at 4am.</p>
+        </div>
       </div>
-      <div class="stage-card">
-        <span class="n">STAGE 02</span>
-        <h3>The Ridge</h3>
-        <p>Elevated stage facing the sunrise — the one slot everyone fights to be scheduled for.</p>
+      <div class="stage-card reveal">
+        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop" alt="DJ performing at sunrise on The Ridge stage">
+        <div class="body">
+          <span class="n">STAGE 02</span>
+          <h3>The Ridge</h3>
+          <p>Elevated stage facing the sunrise — the one slot everyone fights to be scheduled for.</p>
+        </div>
       </div>
-      <div class="stage-card">
-        <span class="n">STAGE 03</span>
-        <h3>The Static</h3>
-        <p>No stage lighting at all — just the crowd, a single sound system, and whoever shows up to play.</p>
+      <div class="stage-card reveal">
+        <img src="https://images.unsplash.com/photo-1516873240891-4bf014598ab4?q=80&w=800&auto=format&fit=crop" alt="Silhouetted crowd at a stripped-back stage with no lighting rig">
+        <div class="body">
+          <span class="n">STAGE 03</span>
+          <h3>The Static</h3>
+          <p>No stage lighting at all — just the crowd, a single sound system, and whoever shows up to play.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="lineup">
-    <span class="section-label">Confirmed So Far</span>
-    <h2 class="display">Three names.<br>The rest is a secret.</h2>
-    <div class="lineup">
-      <div class="lineup-row"><span class="day">FRI</span><span class="name">Mara Volt</span><span class="set">Closing, The Basin</span></div>
-      <div class="lineup-row"><span class="day">SAT</span><span class="name">Kilo Sundown</span><span class="set">Sunrise, The Ridge</span></div>
-      <div class="lineup-row"><span class="day">SUN</span><span class="name">Static Youth</span><span class="set">All Night, The Static</span></div>
+    <div class="section-head reveal">
+      <div>
+        <span class="section-label">Confirmed So Far</span>
+        <h2 class="display" style="margin-bottom:0;">Three names.<br>The rest is a secret.</h2>
+      </div>
+    </div>
+    <div class="lineup reveal">
+      <div class="lineup-day-label">Friday</div>
+      <div class="lineup-row"><span class="name">Mara Volt</span><span class="set">Closing, The Basin</span></div>
+      <div class="lineup-row"><span class="name">Second Skin</span><span class="set">Opening, The Ridge</span></div>
+      <div class="lineup-day-label">Saturday</div>
+      <div class="lineup-row"><span class="name">Kilo Sundown</span><span class="set">Sunrise, The Ridge</span></div>
+      <div class="lineup-row"><span class="name">Glass Choir</span><span class="set">Midnight, The Basin</span></div>
+      <div class="lineup-day-label">Sunday</div>
+      <div class="lineup-row"><span class="name">Static Youth</span><span class="set">All Night, The Static</span></div>
     </div>
   </section>
 
   <section id="visuals">
-    <span class="section-label">Last Year</span>
-    <h2 class="display">What it actually looked like.</h2>
-    <div class="gallery-strip">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-label">Last Year</span>
+        <h2 class="display" style="margin-bottom:0;">What it actually looked like.</h2>
+      </div>
+    </div>
+    <div class="gallery-strip reveal">
       <a href="#"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=700&auto=format&fit=crop" alt="Crowd dancing under stage lights at Pulse Festival"></a>
       <a href="#"><img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=700&auto=format&fit=crop" alt="DJ performing at sunset on The Ridge stage"></a>
       <a href="#"><img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=700&auto=format&fit=crop" alt="Colorful stage lighting and pyrotechnics at night"></a>
       <a href="#"><img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=700&auto=format&fit=crop" alt="Silhouettes of the crowd against a laser light show"></a>
+    </div>
+    <div class="gallery-strip-2 reveal">
+      <a href="#"><img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?q=80&w=600&auto=format&fit=crop" alt="Aerial view of the festival campgrounds at dusk"></a>
+      <a href="#"><img src="https://images.unsplash.com/photo-1571266752264-7a0c8b1f0f6b?q=80&w=600&auto=format&fit=crop" alt="Fans crowd-surfing at a night set"></a>
+      <a href="#"><img src="https://images.unsplash.com/photo-1508973379184-7517410fb0bc?q=80&w=600&auto=format&fit=crop" alt="Close-up of a DJ mixing on a controller"></a>
+      <a href="#"><img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?q=80&w=600&auto=format&fit=crop" alt="Confetti and lights over the crowd during a headline set"></a>
+    </div>
+  </section>
+
+  <section id="tickets">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-label">Passes</span>
+        <h2 class="display" style="margin-bottom:0;">Three ways in.</h2>
+      </div>
+    </div>
+    <div class="tiers-grid reveal">
+      <div class="tier-card">
+        <h3>General</h3>
+        <div class="price">$249</div>
+        <ul>
+          <li>3-day festival access</li>
+          <li>General campground</li>
+          <li>All 4 stages</li>
+        </ul>
+        <a href="#" class="btn btn-line" style="width:100%;text-align:center;">Select</a>
+      </div>
+      <div class="tier-card hi">
+        <span class="badge">Most Chosen</span>
+        <h3>Basin Camp</h3>
+        <div class="price">$449</div>
+        <ul>
+          <li>3-day festival access</li>
+          <li>Shaded premium camping</li>
+          <li>Early entry, Thursday</li>
+          <li>Dedicated shower trailers</li>
+        </ul>
+        <a href="#" class="btn btn-solid" style="width:100%;text-align:center;">Select</a>
+      </div>
+      <div class="tier-card">
+        <h3>The Ridge Pass</h3>
+        <div class="price">$890</div>
+        <ul>
+          <li>Everything in Basin Camp</li>
+          <li>Elevated viewing deck, all stages</li>
+          <li>Private bar &amp; lounge</li>
+        </ul>
+        <a href="#" class="btn btn-line" style="width:100%;text-align:center;">Select</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-label">Before You Go</span>
+        <h2 class="display" style="margin-bottom:0;">Questions people actually ask.</h2>
+      </div>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <h4>When does the location get announced?</h4>
+        <p>48 hours before gates open, sent by SMS and email to everyone with a confirmed ticket. GPS coordinates only, no address.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Is there phone signal on site?</h4>
+        <p>Spotty at best in The Basin, none at all in The Static. Bring a paper map if you're meeting people — we're serious about this.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I bring my own tent?</h4>
+        <p>Yes, in General and Basin Camp. The Ridge Pass includes pre-set canvas tents so you don't need to bring shelter at all.</p>
+      </div>
     </div>
   </section>
 
@@ -257,10 +395,25 @@
   try{
     resize();
     makeBlobs();
-    window.addEventListener('resize', resize);
-    requestAnimationFrame(draw);
-    if (reduced) draw(0);
+    window.addEventListener('resize', function(){ resize(); makeBlobs(); });
+    if (!reduced){
+      requestAnimationFrame(draw);
+    } else {
+      draw(0);
+    }
   }catch(e){}
+
+  try{
+    var els = document.querySelectorAll('.reveal');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); }
+      });
+    }, {threshold:0.12});
+    els.forEach(function(el){ io.observe(el); });
+  }catch(e){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
 })();
 </script>
 
